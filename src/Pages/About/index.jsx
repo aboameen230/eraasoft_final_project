@@ -7,11 +7,6 @@ import frame2 from "../../Assets/Frame 701.png";
 import frame3 from "../../Assets/Frame 702.png";
 import frame4 from "../../Assets/Frame 703.png";
 import aboameen from "../../Assets/aboameen.jpg";
-import hefny from "../../Assets/7efny.jpg";
-import abdallah from "../../Assets/Abdallah.jpg";
-import yahia from "../../Assets/yahia.jpg";
-import omar_f from "../../Assets/omar_f.jpg";
-import Ahmed_f from "../../Assets/Ahmed_f.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFacebook,
@@ -53,64 +48,20 @@ export default function About() {
 
       <div className="mt-28 photoes">
         <div className="ameen">
-          <img src={hefny} className="rounded-sm" />
-          <br />
-          <h1 className="text-2xl font-semibold">Mahmoud Hefny</h1>
-
-          <p>Back-End Developer</p>
-          <FontAwesomeIcon className="i" icon={faFacebook} />
-          <FontAwesomeIcon className="i" icon={faTwitter} />
-          <FontAwesomeIcon className="i" icon={faLinkedin} />
-        </div>
-        <div className="ameen">
           <img src={aboameen} className="rounded-sm" />
           <br />
           <h1 className="text-2xl font-semibold">Ahmed Ameen</h1>
 
           <p>Product Designer</p>
-          <FontAwesomeIcon className="i" icon={faFacebook} />
-          <FontAwesomeIcon className="i" icon={faTwitter} />
-          <FontAwesomeIcon className="i" icon={faLinkedin} />
-        </div>
-        <div className="ameen">
-          <img src={omar_f} className="rounded-sm" />
-          <br />
-          <h1 className="text-2xl font-semibold">Omar Fathy</h1>
-
-          <p>Flutter Developer </p>
-          <FontAwesomeIcon className="i" icon={faFacebook} />
-          <FontAwesomeIcon className="i" icon={faTwitter} />
-          <FontAwesomeIcon className="i" icon={faLinkedin} />
-        </div>
-        <div className="ameen">
-          <img src={yahia} className="rounded-sm" />
-          <br />
-          <h1 className="text-2xl font-semibold">Yahia Mohamed</h1>
-
-          <p>Back-End Developer </p>
-          <FontAwesomeIcon className="i" icon={faFacebook} />
-          <FontAwesomeIcon className="i" icon={faTwitter} />
-          <FontAwesomeIcon className="i" icon={faLinkedin} />
-        </div>
-        <div className="ameen">
-          <img src={Ahmed_f} className="rounded-sm" />
-          <br />
-          <h1 className="text-2xl font-semibold">Ahmed Fathy</h1>
-
-          <p>Ui/Ux Designer </p>
-          <FontAwesomeIcon className="i" icon={faFacebook} />
-          <FontAwesomeIcon className="i" icon={faTwitter} />
-          <FontAwesomeIcon className="i" icon={faLinkedin} />
-        </div>
-        <div className="ameen">
-          <img src={abdallah} className="rounded-sm" />
-          <br />
-          <h1 className="text-2xl font-semibold">Abdullah Gaber</h1>
-
-          <p>Front-End Developer </p>
-          <FontAwesomeIcon className="i" icon={faFacebook} />
-          <FontAwesomeIcon className="i" icon={faTwitter} />
-          <FontAwesomeIcon className="i" icon={faLinkedin} />
+          <a href="https://www.facebook.com/profile.php?id=61552425489041">
+            <FontAwesomeIcon className="i" icon={faFacebook} />
+          </a>
+          <a href="https://www.linkedin.com/in/ahmed-mohamed-el-ameen-06177a202/">
+            <FontAwesomeIcon className="i" icon={faLinkedin} />
+          </a>
+          <a href="https://x.com/aboameen23">
+            <FontAwesomeIcon className="i" icon={faTwitter} />
+          </a>
         </div>
       </div>
       <Features />
