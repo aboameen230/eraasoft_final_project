@@ -6,41 +6,15 @@ import { Link } from "react-router-dom";
 import { faBars, faCartShopping, faX } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import DropDownProfile from "../DropDownProfile";
-import Wishbar from "../wishlist";
-import axios from "axios";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
-  const [wishlistVisible, setWishlistVisible] = useState(false);
-  const [wishlist, setWishlist] = useState([]);
 
-  const fetchWishlist = async () => {
-    const wishlistUrl = "/wishlists/my-wishlist/";
-    try {
-      const response = await axios.get(wishlistUrl, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-        },
-      });
-      setWishlist(response.data);
-    } catch (error) {
-      console.error("Error fetching wishlistUrl:", error);
-    }
-  };
-
-  const handleWishlistClick = () => {
-    setWishlistVisible(true);
-    fetchWishlist();
-  };
-
+  
   return (
     <div className="shadow-md w-full fixed top-0 left-0 bg-white z-50 ">
-      <Wishbar
-        isVisible={wishlistVisible}
-        onClose={() => setWishlistVisible(false)}
-        wishlist={wishlist}
-      />
+
       <div className="md:px-10 py-4 px-7 md:flex justify-between items-center">
         <div className="flex text-2x1 cursor-pointer items-center gap-2">
           <Link to="/Home">
@@ -85,12 +59,11 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            {window.localStorage.getItem("email") ? (
+            {window.localStorage.getItem("accessToken") ? (
               <div className="ml-20 flex gap-4 items-center">
                 <FontAwesomeIcon
                   className="cursor-pointer"
                   icon={faHeart}
-                  onClick={handleWishlistClick}
                 />
                 <Link to="/Cart">
                   <FontAwesomeIcon

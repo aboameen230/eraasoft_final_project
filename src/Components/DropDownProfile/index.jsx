@@ -7,9 +7,8 @@ import { Link } from "react-router-dom";
 
 export default function DropDownProfile() {
   function Logout() {
-    window.localStorage.removeItem("email");
     window.localStorage.removeItem("accessToken");
-    window.localStorage.removeItem("access");
+    window.localStorage.removeItem("ID");
     window.location.pathname = "/";
   }
   return (

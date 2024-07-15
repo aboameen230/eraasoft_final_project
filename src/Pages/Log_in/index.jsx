@@ -13,9 +13,6 @@ const LogIn = () => {
   const [password, setPassword] = useState("");
   const [flag, setFlag] = useState(true);
 
-  const handleInputChange = (e, setter) => {
-    setter(e.target.value);
-  };
 
   const submit = async (e) => {
     e.preventDefault();
@@ -30,7 +27,7 @@ const LogIn = () => {
 
     try {
       const response = await axios.post(
-        "customers/login/",
+        "https://django-e-commerce-production.up.railway.app/customers/login/",
         {
           email_or_phone: emailOrPhone,
           password: password,
@@ -42,10 +39,7 @@ const LogIn = () => {
       console.log("Response received from the server:");
       console.log(responseData);
 
-      window.localStorage.setItem("email", emailOrPhone);
       window.localStorage.setItem("accessToken", responseData.access);
-      window.localStorage.setItem("refreshToken", responseData.refresh);
-
       window.localStorage.setItem("ID", responseData.user.id);
       window.location.pathname = "/";
 
@@ -69,7 +63,7 @@ const LogIn = () => {
                 type="text"
                 placeholder="Email or Phone Number"
                 value={emailOrPhone}
-                onChange={(e) => handleInputChange(e, setEmailOrPhone)}
+                onChange={(e) => setEmailOrPhone(e.target.value)}
               />
             </div>
             <br />
@@ -78,7 +72,7 @@ const LogIn = () => {
                 type="password"
                 placeholder="Password"
                 value={password}
-                onChange={(e) => handleInputChange(e, setPassword)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <br />

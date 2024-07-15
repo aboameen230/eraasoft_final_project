@@ -32,12 +32,15 @@ export default function Sign_up() {
 
     if (flag) {
       const response = await axios
-        .post("/customers/signup/", {
-          full_name: name,
-          email: email,
-          password: password,
-          phone_number: phone,
-        })
+        .post(
+          "https://django-e-commerce-production.up.railway.app/customers/signup/",
+          {
+            full_name: name,
+            email: email,
+            password: password,
+            phone_number: phone,
+          }
+        )
 
         // IF the request is successful, the server will respond with a 2xx status code
         .then((res) => {
