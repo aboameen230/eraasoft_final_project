@@ -3,18 +3,21 @@ import "./index.scss";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   async function submit(event) {
     event.preventDefault(); // Prevent default form submission behavior
     try {
       const res = await axios.post(
-        "/contact-us/send/",
+        "https://django-e-commerce-production.up.railway.app/contact-us/send/",
         {
           name: name,
           email: email,
@@ -23,6 +26,11 @@ export default function Contact() {
         }
       );
       console.log(res.data);
+      Swal.fire({
+        title: "Done",
+        text: "Your message has been sent successfully",
+        icon: "success",
+      });
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -39,7 +47,7 @@ export default function Contact() {
           <h3 className="font-bold">Call To Us</h3>
         </div>
         <br />
-        <p>We are available 24/7, 7 days a week.</p>
+        <p>We are available 24 hours, 7 days a week.</p>
         <p className="mt-3">Phone: +20114453059</p>
         <br />
         <hr />
