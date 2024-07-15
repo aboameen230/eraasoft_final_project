@@ -1,0 +1,84 @@
+.footer {
+  padding: 5px 80px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: #000;
+  color: white !important;
+}
+
+.footer .col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.footer .gg {
+  margin-top: 5%;
+}
+
+.footer .logo {
+  margin-bottom: 30px;
+  width: 25%;
+}
+
+.footer h4 {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.footer p {
+  font-size: 13px;
+  margin: 0 0 8px 0;
+}
+
+.footer .a {
+  font-size: 13px;
+  text-decoration: none;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.footer .follow {
+  margin-top: 20px;
+}
+
+.footer .follow .i {
+  padding-right: 4px;
+  cursor: pointer;
+  color: rgb(91, 91, 91);
+}
+
+.footer .install {
+  margin-top: 5%;
+}
+
+.footer .install .row img {
+  border-radius: 2rem;
+  cursor: pointer;
+}
+
+.footer .install .row {
+  display: flex;
+}
+
+.footer .install img {
+  margin: 10px 0 15px 0;
+  width: 50%;
+}
+
+.footer .follow .i:hover,
+.footer a:hover {
+  color: white;
+}
+
+.footer .copyright {
+  width: 100%;
+  text-align: center;
+}
+
+@media only screen and (max-width: 1024px) {
+  .footer .install {
+    margin: 0 auto;
+  }
+}
