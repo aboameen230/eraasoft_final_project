@@ -114,9 +114,11 @@ export default function Home() {
           <h1 className="text-3xl">
             <strong>Best Selling Products</strong>
           </h1>
-          <button className="bg-mycolor px-8 py-3 text-white rounded">
-            View All
-          </button>
+          <Link to="/Shop">
+            <button className="bg-mycolor px-8 py-3 text-white rounded">
+              View All
+            </button>
+          </Link>
         </div>
       </div>
       <div className="products">
@@ -136,7 +138,7 @@ export default function Home() {
                 <p className="text-mycolor text-lg font-medium">
                   ${product.price}
                 </p>
-                <div className="rating">
+                <div className="rating mb-1">
                   <span className="text-yellow-300 font-bold text-xl">
                     {"★".repeat(Math.floor(product.average_rating)) +
                       "☆".repeat(5 - Math.floor(product.average_rating))}
@@ -183,7 +185,7 @@ export default function Home() {
                   <p className="text-mycolor text-lg font-medium">
                     ${product.price}
                   </p>
-                  <div className="rating">
+                  <div className="rating mb-1">
                     <span className="text-yellow-300 font-bold text-xl">
                       {"★".repeat(Math.floor(product.average_rating)) +
                         "☆".repeat(5 - Math.floor(product.average_rating))}
