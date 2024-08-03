@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./index.scss";
 import side from "../../Assets/Side Image.png";
-import Google from "../../Assets/google icon.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -26,7 +25,6 @@ export default function Sign_up() {
 
     if (name === "" || !isPasswordValid(password) || phone.length !== 11) {
       setFlag(false);
-      // Show alert to the user that the credentials are invalid "In the browser"
       alert("");
     } else setFlag(true);
 
@@ -42,21 +40,20 @@ export default function Sign_up() {
           }
         )
 
-        // IF the request is successful, the server will respond with a 2xx status code
+       
         .then((res) => {
-          // Log the response data
+         
           console.log("Response received from the server:");
           console.log(res.data);
           window.location.pathname = "/Log_in";
           if (res.data && res.data.user) {
             console.log(`Signup successful. User ID: ${res.data.user.id}`);
-
-            navigate("/Log_in"); // Redirect to the home page
+            navigate("/Log_in");
           }
         });
       console.log(response.data);
     }
-    // console.log(res);
+   
   }
 
   return (
@@ -117,10 +114,6 @@ export default function Sign_up() {
             <br />
             <button type="submit" id="c">
               Create Account
-            </button>
-            <br />
-            <button id="g">
-              <img src={Google} alt="" /> Sign up with Google
             </button>
           </form>
           <p className="al">
