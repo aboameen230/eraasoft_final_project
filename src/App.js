@@ -9,7 +9,6 @@ import About from './Pages/About/index';
 import Not_found from './Pages/Not_Found/index';
 import Sign_up from './Pages/Sign_up/index';
 import Profile from "./Pages/SetProfile";
-import My_Profile from "./Pages/My_Profile";
 
 export default function App() {
   return (
@@ -25,7 +24,6 @@ export default function App() {
             <Route path="/Sign_up" element={<Sign_up />} />
             <Route path="/About" element={<About />} />
             <Route path="/SetProfile" element={<Profile />} />
-            <Route path="/My_Profile" element={<My_Profile />} />
             <Route path="*" element={<Not_found />} />
           </Route>
         </Routes>

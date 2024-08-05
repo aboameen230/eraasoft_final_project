@@ -23,15 +23,7 @@ export default function DropDownProfile() {
             <p>Manage My Account</p>
           </Link>
         </li>
-        <li className="flex gap-4 items-center">
-          <Link
-            className="flex gap-4 items-center hover:text-mycolor"
-            to="/My_Profile"
-          >
-            <FontAwesomeIcon icon={faUser} />
-            <p>My Profile</p>
-          </Link>
-        </li>
+
         <li className="flex gap-4 items-center hover:text-mycolor">
           <FontAwesomeIcon icon={faArrowRightFromBracket} />
           <button onClick={Logout}>
