@@ -42,82 +42,82 @@ export default function Home() {
     setHoveredProductId(null);
   };
 
-  const handleAddToCart = (product) => {
-    axios
-      .post(
-        "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
-        {
-          product_id: product.id,
-          item_quantity: 1,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
-          },
-        }
-      )
-      .then((response) => {
-        console.log("Product added to cart:", response.data);
-        alert("Added to cart successfully");
-      })
-      .catch((error) => {
-        console.error(
-          "There was an error adding the product to the cart!",
-          error
-        );
-      });
-  };
-
   // const handleAddToCart = (product) => {
   //   axios
-  //     .get("https://django-e-commerce-production.up.railway.app/carts/my-cart/", {
-  //       headers: {
-  //         Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
+  //     .post(
+  //       "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
+  //       {
+  //         product_id: product.id,
+  //         item_quantity: 1,
   //       },
-  //     })
-  //     .then((response) => {
-  //       const cart = response.data;
-
-  //       const productIncart = cart.some(
-  //         (cartItem) => cartItem.product.id === product.id
-  //       );
-
-  //       if (productIncart) {
-  //         console.log("Product already exists in the cart");
-  //       } else {
-  //         axios
-  //           .post(
-  //             "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
-  //             {
-  //               product_id: product.id,
-  //               item_quantity: 1,
-  //             },
-  //             {
-  //               headers: {
-  //                 Authorization: `Bearer ${window.localStorage.getItem(
-  //                   "accessToken"
-  //                 )}`,
-  //               },
-  //             }
-  //           )
-  //           .then((response) => {
-  //             console.log("Product added to cart:", response.data);
-  //             alert("Added to cart successfully");
-  //           })
-  //           .catch((error) => {
-  //             console.error(
-  //               "There was an error adding the product to the cart!",
-  //               error
-  //             );
-  //           });
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${window.localStorage.getItem(
+  //             "accessToken"
+  //           )}`,
+  //         },
   //       }
+  //     )
+  //     .then((response) => {
+  //       console.log("Product added to cart:", response.data);
+  //       alert("Added to cart successfully");
   //     })
   //     .catch((error) => {
-  //       console.error("There was an error fetching the cart!", error);
+  //       console.error(
+  //         "There was an error adding the product to the cart!",
+  //         error
+  //       );
   //     });
   // };
+
+  const handleAddToCart = (product) => {
+    axios
+      .get("https://django-e-commerce-production.up.railway.app/carts/my-cart/", {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
+        },
+      })
+      .then((response) => {
+        const cart = response.data;
+
+        const productIncart = cart.some(
+          (cartItem) => cartItem.product.id === product.id
+        );
+
+        if (productIncart) {
+          console.log("Product already exists in the cart");
+        } else {
+          axios
+            .post(
+              "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
+              {
+                product_id: product.id,
+                item_quantity: 1,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${window.localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+              }
+            )
+            .then((response) => {
+              console.log("Product added to cart:", response.data);
+              alert("Added to cart successfully");
+            })
+            .catch((error) => {
+              console.error(
+                "There was an error adding the product to the cart!",
+                error
+              );
+            });
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the cart!", error);
+      });
+  };
 
   return (
     <div className="mt-28">
