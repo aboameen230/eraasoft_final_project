@@ -27,7 +27,6 @@ export default function Home() {
       .get("https://django-e-commerce-production.up.railway.app/api/products/")
       .then((response) => {
         setProducts(response.data);
-        console.log(response.data);
       })
       .catch((error) => {
         console.error("There was an error fetching the products!", error);
