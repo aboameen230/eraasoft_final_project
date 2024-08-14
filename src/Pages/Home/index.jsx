@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
+import Swal from "sweetalert2";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
@@ -84,6 +85,11 @@ export default function Home() {
         );
 
         if (productIncart) {
+          Swal.fire({
+            title: "Error",
+            text: "This product already exists in the cart",
+            icon: "error",
+          });
           console.log("Product already exists in the cart");
         } else {
           axios
@@ -103,7 +109,11 @@ export default function Home() {
             )
             .then((response) => {
               console.log("Product added to cart:", response.data);
-              alert("Added to cart successfully");
+              Swal.fire({
+                title: "Done",
+                text: "Your Product has been added to cart successfully",
+                icon: "success",
+              });
             })
             .catch((error) => {
               console.error(
