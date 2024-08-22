@@ -72,11 +72,16 @@ export default function Home() {
 
   const handleAddToCart = (product) => {
     axios
-      .get("https://django-e-commerce-production.up.railway.app/carts/my-cart/", {
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem("accessToken")}`,
-        },
-      })
+      .get(
+        "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "accessToken"
+            )}`,
+          },
+        }
+      )
       .then((response) => {
         const cart = response.data;
 
@@ -125,6 +130,68 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("There was an error fetching the cart!", error);
+      });
+  };
+  const handleAddToWishlist = (product) => {
+    axios
+      .get(
+        "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "accessToken"
+            )}`,
+          },
+        }
+      )
+      .then((response) => {
+        const wishlist = response.data;
+
+        const productInwishlist = wishlist.some(
+          (wishlistItem) => wishlistItem.product.id === product.id
+        );
+
+        if (productInwishlist) {
+          Swal.fire({
+            title: "Error",
+            text: "This product already exists in the wishlist",
+            icon: "error",
+          });
+          console.log("Product already exists in the wishlist");
+        } else {
+          axios
+            .post(
+              "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
+              {
+                product_id: product.id,
+                item_quantity: 1,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${window.localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+              }
+            )
+            .then((response) => {
+              console.log("Product added to wishlist:", response.data);
+              Swal.fire({
+                title: "Done",
+                text: "Your Product has been added to wishlist successfully",
+                icon: "success",
+              });
+            })
+            .catch((error) => {
+              console.error(
+                "There was an error adding the product to the wishlist!",
+                error
+              );
+            });
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the wishlist!", error);
       });
   };
 
@@ -212,7 +279,10 @@ export default function Home() {
                   Add to Cart
                 </button>
               )}
-              <button className="product_heart">
+              <button
+                className="product_heart"
+                onClick={() => handleAddToWishlist(product)}
+              >
                 <FontAwesomeIcon icon={faHeart} />
               </button>
             </div>
@@ -259,7 +329,10 @@ export default function Home() {
                     Add to Cart
                   </button>
                 )}
-                <button className="product_heart">
+                <button
+                  className="product_heart"
+                  onClick={() => handleAddToWishlist(product)}
+                >
                   <FontAwesomeIcon icon={faHeart} />
                 </button>
               </div>
