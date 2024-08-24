@@ -80,7 +80,7 @@ export default function Home() {
               "accessToken"
             )}`,
           },
-        }
+        }     
       )
       .then((response) => {
         const cart = response.data;
