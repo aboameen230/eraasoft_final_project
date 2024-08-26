@@ -22,6 +22,8 @@ import Swal from "sweetalert2";
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [hoveredProductId, setHoveredProductId] = useState(null);
+  const [wishlistProducts, setWishlistProducts] = useState([]);
+
 
   useEffect(() => {
     axios
@@ -146,18 +148,42 @@ export default function Home() {
       )
       .then((response) => {
         const wishlist = response.data;
+        setWishlistProducts(response.data.map((item) => item.product.id));
+          const isInWishlist = wishlistProducts.includes(product.id);
 
-        const productInwishlist = wishlist.some(
-          (wishlistItem) => wishlistItem.product.id === product.id
-        );
 
-        if (productInwishlist) {
-          Swal.fire({
-            title: "Error",
-            text: "This product already exists in the wishlist",
-            icon: "error",
-          });
-          console.log("Product already exists in the wishlist");
+        // const productInwishlist = wishlist.some(
+        //   (wishlistItem) => wishlistItem.product.id === product.id
+        // );
+
+        if (isInWishlist) {
+          axios
+            .delete(
+              `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${product.id}/`,
+              {
+                headers: {
+                  Authorization: `Bearer ${window.localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+              }
+            )
+            .then(() => {
+              setWishlistProducts((prevWishlist) =>
+                prevWishlist.filter((id) => id !== product.id)
+              );
+              Swal.fire({
+                title: "Removed",
+                text: "Product has been removed from your wishlist.",
+                icon: "info",
+              });
+            })
+            .catch((error) => {
+              console.error(
+                "There was an error removing the product from the wishlist!",
+                error
+              );
+            });
         } else {
           axios
             .post(
@@ -175,10 +201,13 @@ export default function Home() {
               }
             )
             .then((response) => {
-              console.log("Product added to wishlist:", response.data);
+              setWishlistProducts((prevWishlist) => [
+                ...prevWishlist,
+                product.id,
+              ]);
               Swal.fire({
-                title: "Done",
-                text: "Your Product has been added to wishlist successfully",
+                title: "Added",
+                text: "Product has been added to your wishlist.",
                 icon: "success",
               });
             })
@@ -281,6 +310,11 @@ export default function Home() {
               )}
               <button
                 className="product_heart"
+                style={{
+                  backgroundColor: wishlistProducts.includes(product.id)
+                    ? "red"
+                    : "rgb(220, 219, 219)",
+                }}
                 onClick={() => handleAddToWishlist(product)}
               >
                 <FontAwesomeIcon icon={faHeart} />
@@ -331,6 +365,11 @@ export default function Home() {
                 )}
                 <button
                   className="product_heart"
+                  style={{
+                    backgroundColor: wishlistProducts.includes(product.id)
+                      ? "red"
+                      : "rgb(220, 219, 219)",
+                  }}
                   onClick={() => handleAddToWishlist(product)}
                 >
                   <FontAwesomeIcon icon={faHeart} />
