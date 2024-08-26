@@ -148,18 +148,16 @@ export default function Home() {
       )
       .then((response) => {
         const wishlist = response.data;
-        setWishlistProducts(response.data.map((item) => item.product.id));
-          const isInWishlist = wishlistProducts.includes(product.id);
+        setWishlistProducts(wishlist.map((item) => item.product.id));
 
+        const wishlistItem = wishlist.find(
+          (item) => item.product.id === product.id
+        );
 
-        // const productInwishlist = wishlist.some(
-        //   (wishlistItem) => wishlistItem.product.id === product.id
-        // );
-
-        if (isInWishlist) {
+        if (wishlistItem) {
           axios
             .delete(
-              `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${product.id}/`,
+              `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${wishlistItem.id}/`,
               {
                 headers: {
                   Authorization: `Bearer ${window.localStorage.getItem(
@@ -190,7 +188,6 @@ export default function Home() {
               "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
               {
                 product_id: product.id,
-                item_quantity: 1,
               },
               {
                 headers: {
@@ -223,6 +220,7 @@ export default function Home() {
         console.error("There was an error fetching the wishlist!", error);
       });
   };
+
 
   return (
     <div className="mt-28">
