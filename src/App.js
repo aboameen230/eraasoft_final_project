@@ -10,6 +10,7 @@ import Not_found from './Pages/Not_Found/index';
 import Sign_up from './Pages/Sign_up/index';
 import Profile from "./Pages/SetProfile";
 import Shop from "./Pages/Shop";
+import Wishlist from "./Pages/Wishlist";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
             <Route path="/About" element={<About />} />
             <Route path="/SetProfile" element={<Profile />} />
             <Route path="/Shop" element={<Shop />} />
+            <Route path="/Wishlist" element={<Wishlist />} />
             <Route path="*" element={<Not_found />} />
           </Route>
         </Routes>

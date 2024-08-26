@@ -11,10 +11,8 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
 
-  
   return (
     <div className="shadow-md w-full fixed top-0 left-0 bg-white z-50 ">
-
       <div className="md:px-10 py-4 px-7 md:flex justify-between items-center">
         <div className="flex text-2x1 cursor-pointer items-center gap-2">
           <Link to="/Home">
@@ -61,10 +59,9 @@ export default function Header() {
           <li>
             {window.localStorage.getItem("accessToken") ? (
               <div className="ml-20 flex gap-4 items-center">
-                <FontAwesomeIcon
-                  className="cursor-pointer"
-                  icon={faHeart}
-                />
+                <Link to="/Wishlist">
+                  <FontAwesomeIcon className="cursor-pointer" icon={faHeart} />
+                </Link>
                 <Link to="/Cart">
                   <FontAwesomeIcon
                     className="cursor-pointer"
