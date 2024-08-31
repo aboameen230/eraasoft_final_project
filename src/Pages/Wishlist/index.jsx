@@ -62,32 +62,64 @@ export default function Wishlist() {
 
   const handleAddToCart = (product) => {
     axios
-      .post(
+      .get(
         "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
-        {
-          product_id: product.id,
-          item_quantity: 1,
-        },
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem(
               "accessToken"
             )}`,
           },
-        }
+        }     
       )
       .then((response) => {
-        Swal.fire({
-          title: "Added",
-          text: "Product has been added to your cart.",
-          icon: "success",
-        });
+        const cart = response.data;
+
+        const productIncart = cart.some(
+          (cartItem) => cartItem.product.id === product.id
+        );
+
+        if (productIncart) {
+          Swal.fire({
+            title: "Error",
+            text: "This product already exists in the cart",
+            icon: "error",
+          });
+          console.log("Product already exists in the cart");
+        } else {
+          axios
+            .post(
+              "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
+              {
+                product_id: product.id,
+                item_quantity: 1,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${window.localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+              }
+            )
+            .then((response) => {
+              console.log("Product added to cart:", response.data);
+              Swal.fire({
+                title: "Done",
+                text: "Your Product has been added to cart successfully",
+                icon: "success",
+              });
+            })
+            .catch((error) => {
+              console.error(
+                "There was an error adding the product to the cart!",
+                error
+              );
+            });
+        }
       })
       .catch((error) => {
-        console.error(
-          "There was an error adding the product to the cart!",
-          error
-        );
+        console.error("There was an error fetching the cart!", error);
       });
   };
 
