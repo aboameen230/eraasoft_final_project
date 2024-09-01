@@ -1,44 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
-import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import "./index.scss";
+import "./index.scss"; // Make sure to create and link this stylesheet
 
-const Wishlist = () => {
-  const [wishlistProducts, setWishlistProducts] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+export default function Wishlist() {
+  const [wishlistItems, setWishlistItems] = useState([]);
 
   useEffect(() => {
-    const fetchWishlist = async () => {
-      try {
-        const response = await axios.get(
-          "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
-          {
-            headers: {
-              Authorization: `Bearer ${window.localStorage.getItem(
-                "accessToken"
-              )}`,
-            },
-          }
-        );
-        setWishlistProducts(response.data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchWishlist();
-  }, []);
-
-  const handleRemoveFromWishlist = async (productId) => {
-    try {
-      const response = await axios.delete(
-        `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${productId}/`,
+    axios
+      .get(
+        "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem(
@@ -46,28 +18,18 @@ const Wishlist = () => {
             )}`,
           },
         }
-      );
-      console.log(response); // Log the response from the server
-      console.log(response.status); // Log the status code of the response
-      console.log(response.data); // Log the data returned by the server
-      setWishlistProducts((prevWishlist) =>
-        prevWishlist.filter((product) => product.product.id !== productId)
-      );
-      Swal.fire({
-        title: "Removed",
-        text: "Product has been removed from your wishlist.",
-        icon: "info",
+      )
+      .then((response) => {
+        setWishlistItems(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the wishlist items!", error);
       });
-    } catch (error) {
-      console.error(error); // Log the error
-      console.error(error.response); // Log the error response
-      setError(error.message);
-    }
-  };
+  }, []);
 
-  const handleAddToCart = async (product) => {
-    try {
-      const response = await axios.get(
+  const handleAddToCart = (product) => {
+    axios
+      .get(
         "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
         {
           headers: {
@@ -76,93 +38,127 @@ const Wishlist = () => {
             )}`,
           },
         }
-      );
-      const cart = response.data;
-      const productInCart = cart.some(
-        (cartItem) => cartItem.product.id === product.id
-      );
-      if (productInCart) {
-        Swal.fire({
-          title: "Error",
-          text: "This product already exists in the cart",
-          icon: "error",
-        });
-      } else {
-        await axios.post(
-          "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
-          {
-            product_id: product.id,
-            item_quantity: 1,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${window.localStorage.getItem(
-                "accessToken"
-              )}`,
-            },
-          }
+      )
+      .then((response) => {
+        const cart = response.data;
+
+        const productIncart = cart.some(
+          (cartItem) => cartItem.product.id === product.id
         );
-        Swal.fire({
-          title: "Done",
-          text: "Your Product has been added to cart successfully",
-          icon: "success",
-        });
-      }
-    } catch (error) {
-      setError(error.message);
-    }
+
+        if (productIncart) {
+          Swal.fire({
+            title: "Error",
+            text: "This product already exists in the cart",
+            icon: "error",
+          });
+          console.log("Product already exists in the cart");
+        } else {
+          axios
+            .post(
+              "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
+              {
+                product_id: product.id,
+                item_quantity: 1,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${window.localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+              }
+            )
+            .then((response) => {
+              console.log("Product added to cart:", response.data);
+              Swal.fire({
+                title: "Done",
+                text: "Your Product has been added to cart successfully",
+                icon: "success",
+              });
+            })
+            .catch((error) => {
+              console.error(
+                "There was an error adding the product to the cart!",
+                error
+              );
+            });
+        }
+      })
+      .catch((error) => {
+        console.error("There was an error fetching the cart!", error);
+      });
   };
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+  const handleRemoveFromWishlist = (id) => {
+    axios
+      .delete(
+        `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${id}/`,
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+              "accessToken"
+            )}`,
+          },
+        }
+      )
+      .then(() => {
+        setWishlistItems((prevItems) =>
+          prevItems.filter((item) => item.id !== id)
+        );
+        Swal.fire(
+          "Removed",
+          "Product has been removed from your wishlist.",
+          "info"
+        );
+      })
+      .catch((error) => {
+        console.error(
+          "There was an error removing the product from the wishlist!",
+          error
+        );
+      });
+  };
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
   return (
-    <div className="wishlist-page mt-20">
-      <h1>Your Wishlist</h1>
-      {wishlistProducts.length === 0 ? (
-        <p>Your wishlist is empty.</p>
-      ) : (
-        <div className="wishlist-products">
-          {wishlistProducts.map((wishlistItem) => (
-            <div
-              key={wishlistItem.product.id}
-              className="wishlist-product-card"
-            >
+    <div className="wishlist-page">
+      <h1 className="wishlist-title">My Wishlist</h1>
+      <div className="wishlist-items">
+        {wishlistItems.length > 0 ? (
+          wishlistItems.map((item) => (
+            <div key={item.id} className="wishlist-card">
               <img
-                src={wishlistItem.product.image}
-                alt={wishlistItem.product.name}
+                src={item.product.image}
+                alt={item.product.name}
+                className="wishlist-image"
               />
-              <div className="wishlist-product-info">
-                <h2>{wishlistItem.product.name}</h2>
-                <p>${wishlistItem.product.price}</p>
-                <button
-                  className="buttoncart"
-                  onClick={() => handleAddToCart(wishlistItem.product)}
-                >
-                  <FontAwesomeIcon icon={faShoppingCart} /> Add to Cart
-                </button>
-                <button
-                  className="remove-button"
-                  onClick={() =>
-                    handleRemoveFromWishlist(wishlistItem.product.id)
-                  }
-                >
-                  <FontAwesomeIcon icon={faTrashAlt} /> Remove
-                </button>
+              <div className="wishlist-info">
+                <h2>{item.product.name}</h2>
+                <p>${item.product.price}</p>
+                <div className="wishlist-actions">
+                  <button
+                    className="add-to-cart"
+                    onClick={() => handleAddToCart(item.product)}
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    className="remove-from-wishlist"
+                    onClick={() => handleRemoveFromWishlist(item.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      )}
-      <Link className="linkbtn" to="/Shop">
-        <button>Continue Shopping</button>
+          ))
+        ) : (
+          <p>Your wishlist is empty.</p>
+        )}
+      </div>
+      <Link to="/Shop" className="back-to-shop">
+        <button className="shop-button">Continue Shopping</button>
       </Link>
     </div>
   );
-};
-
-export default Wishlist;
+}
