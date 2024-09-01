@@ -24,7 +24,6 @@ export default function Home() {
   const [hoveredProductId, setHoveredProductId] = useState(null);
   const [wishlistProducts, setWishlistProducts] = useState([]);
 
-
   useEffect(() => {
     axios
       .get("https://django-e-commerce-production.up.railway.app/api/products/")
@@ -44,34 +43,6 @@ export default function Home() {
     setHoveredProductId(null);
   };
 
-  // const handleAddToCart = (product) => {
-  //   axios
-  //     .post(
-  //       "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
-  //       {
-  //         product_id: product.id,
-  //         item_quantity: 1,
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${window.localStorage.getItem(
-  //             "accessToken"
-  //           )}`,
-  //         },
-  //       }
-  //     )
-  //     .then((response) => {
-  //       console.log("Product added to cart:", response.data);
-  //       alert("Added to cart successfully");
-  //     })
-  //     .catch((error) => {
-  //       console.error(
-  //         "There was an error adding the product to the cart!",
-  //         error
-  //       );
-  //     });
-  // };
-
   const handleAddToCart = (product) => {
     axios
       .get(
@@ -82,7 +53,7 @@ export default function Home() {
               "accessToken"
             )}`,
           },
-        }     
+        }
       )
       .then((response) => {
         const cart = response.data;
@@ -220,7 +191,6 @@ export default function Home() {
         console.error("There was an error fetching the wishlist!", error);
       });
   };
-
 
   return (
     <div className="mt-28">
