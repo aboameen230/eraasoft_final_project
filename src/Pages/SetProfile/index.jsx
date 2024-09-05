@@ -74,7 +74,7 @@ export default function ProfilePage() {
           text: "Your Profile has been changed successfully",
           icon: "success",
         }).then(() => {
-          window.location.reload(); // Refresh the page
+          window.location.reload(); 
         });
       }
     } catch (error) {
@@ -84,7 +84,7 @@ export default function ProfilePage() {
 
   if (loading)
     return (
-      <div className="text-black font-bold text-3xl flex justify-center items-center">
+      <div className="loader">
         Loading...
       </div>
     );

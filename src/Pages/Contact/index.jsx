@@ -4,17 +4,15 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
 export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
 
   async function submit(event) {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault(); 
     try {
       const res = await axios.post(
         "https://django-e-commerce-production.up.railway.app/contact-us/send/",
@@ -30,6 +28,8 @@ export default function Contact() {
         title: "Done",
         text: "Your message has been sent successfully",
         icon: "success",
+      }).then(() => {
+        window.location.reload();
       });
     } catch (error) {
       console.error("Error submitting form:", error);

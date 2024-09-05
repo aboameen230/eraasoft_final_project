@@ -6,23 +6,24 @@ import sideImage from "../../Assets/Side Image.png";
 import axios from "axios";
 
 import isPasswordValid from "../../passwordValidator";
+import Swal from "sweetalert2";
 
 const LogIn = () => {
   const navigate = useNavigate();
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [flag, setFlag] = useState(true);
 
 
   const submit = async (e) => {
     e.preventDefault();
 
-    setFlag(true);
 
     if (emailOrPhone === "" || !isPasswordValid(password)) {
-      setFlag(false);
-      alert("Invalid credentials. Please check your email/phone and password.");
-      return;
+      Swal.fire({
+        title: "Error",
+        text: "Please check your email/phone and password",
+        icon: "error",
+      });
     }
 
     try {
@@ -34,7 +35,7 @@ const LogIn = () => {
         }
       );
 
-      const responseData = response.data; // Move this line here
+      const responseData = response.data; 
 
       console.log("Response received from the server:");
       console.log(responseData);
@@ -44,10 +45,15 @@ const LogIn = () => {
       window.location.pathname = "/";
 
       if (responseData && responseData.user) {
-        navigate("/"); // Redirect to the home page
+        navigate("/"); 
       }
     } catch (error) {
-      alert("Invalid credentials. Please check your email/phone and password.");
+      Swal.fire({
+        title: "Error",
+        text: "Please check your email/phone and password",
+        icon: "error",
+      });
+      console.error("There was an error ", error);
     }
   };
 
