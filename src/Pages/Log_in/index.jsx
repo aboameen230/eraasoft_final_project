@@ -1,29 +1,35 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./index.scss";
-
 import sideImage from "../../Assets/Side Image.png";
 import axios from "axios";
-
 import isPasswordValid from "../../passwordValidator";
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const LogIn = () => {
   const navigate = useNavigate();
   const [emailOrPhone, setEmailOrPhone] = useState("");
   const [password, setPassword] = useState("");
 
+  const [emailOrPhoneError, setEmailOrPhoneError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
 
+    setEmailOrPhoneError("");
+    setPasswordError("");
+
+    if (emailOrPhone === "") {
+      setEmailOrPhoneError("Please enter your email or phone.");
+    }
+
+    if (!isPasswordValid(password)) {
+      setPasswordError("Please enter a valid password.");
+    }
 
     if (emailOrPhone === "" || !isPasswordValid(password)) {
-      Swal.fire({
-        title: "Error",
-        text: "Please check your email/phone and password",
-        icon: "error",
-      });
+      return;
     }
 
     try {
@@ -35,7 +41,7 @@ const LogIn = () => {
         }
       );
 
-      const responseData = response.data; 
+      const responseData = response.data;
 
       console.log("Response received from the server:");
       console.log(responseData);
@@ -45,14 +51,10 @@ const LogIn = () => {
       window.location.pathname = "/";
 
       if (responseData && responseData.user) {
-        navigate("/"); 
+        navigate("/");
       }
     } catch (error) {
-      Swal.fire({
-        title: "Error",
-        text: "Please check your email/phone and password",
-        icon: "error",
-      });
+      toast.error("Please check your email/phone and password");
       console.error("There was an error ", error);
     }
   };
@@ -71,6 +73,9 @@ const LogIn = () => {
                 value={emailOrPhone}
                 onChange={(e) => setEmailOrPhone(e.target.value)}
               />
+              {emailOrPhoneError && (
+                <p className="error-text">{emailOrPhoneError}</p>
+              )}
             </div>
             <br />
             <div className="input-box-login">
@@ -80,6 +85,7 @@ const LogIn = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              {passwordError && <p className="error-text">{passwordError}</p>}
             </div>
             <br />
             <div className="ll">

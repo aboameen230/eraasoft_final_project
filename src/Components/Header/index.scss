@@ -1,6 +1,9 @@
 @media only screen and (max-width: 767px) {
   .gg {
     padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
   }
   .ggg {
     margin-top: 10px;

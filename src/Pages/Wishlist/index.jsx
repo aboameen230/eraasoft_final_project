@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 import "./index.scss"; // Make sure to create and link this stylesheet
+import toast from "react-hot-toast";
 
 export default function Wishlist() {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -47,11 +47,7 @@ export default function Wishlist() {
         );
 
         if (productIncart) {
-          Swal.fire({
-            title: "Error",
-            text: "This product already exists in the cart",
-            icon: "error",
-          });
+          toast.success("Your Product has been added to cart successfully");
           console.log("Product already exists in the cart");
         } else {
           axios
@@ -71,11 +67,7 @@ export default function Wishlist() {
             )
             .then((response) => {
               console.log("Product added to cart:", response.data);
-              Swal.fire({
-                title: "Done",
-                text: "Your Product has been added to cart successfully",
-                icon: "success",
-              });
+              toast.success("Your Product has been added to cart successfully");
             })
             .catch((error) => {
               console.error(
@@ -106,11 +98,7 @@ export default function Wishlist() {
         setWishlistItems((prevItems) =>
           prevItems.filter((item) => item.id !== id)
         );
-        Swal.fire(
-          "Removed",
-          "Product has been removed from your wishlist.",
-          "info"
-        );
+        toast.error("Product has been removed from your wishlist.")
       })
       .catch((error) => {
         console.error(

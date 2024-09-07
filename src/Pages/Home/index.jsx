@@ -17,12 +17,24 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
   const [hoveredProductId, setHoveredProductId] = useState(null);
   const [wishlistProducts, setWishlistProducts] = useState([]);
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+  };
 
   useEffect(() => {
     axios
@@ -63,11 +75,7 @@ export default function Home() {
         );
 
         if (productIncart) {
-          Swal.fire({
-            title: "Error",
-            text: "This product already exists in the cart",
-            icon: "error",
-          });
+          toast.success("Your Product has been added to cart successfully");
           console.log("Product already exists in the cart");
         } else {
           axios
@@ -87,11 +95,7 @@ export default function Home() {
             )
             .then((response) => {
               console.log("Product added to cart:", response.data);
-              Swal.fire({
-                title: "Done",
-                text: "Your Product has been added to cart successfully",
-                icon: "success",
-              });
+              toast.success("Your Product has been added to cart successfully");
             })
             .catch((error) => {
               console.error(
@@ -141,11 +145,7 @@ export default function Home() {
               setWishlistProducts((prevWishlist) =>
                 prevWishlist.filter((id) => id !== product.id)
               );
-              Swal.fire({
-                title: "Removed",
-                text: "Product has been removed from your wishlist.",
-                icon: "info",
-              });
+              toast.error("Product has been removed from your wishlist");
             })
             .catch((error) => {
               console.error(
@@ -173,11 +173,9 @@ export default function Home() {
                 ...prevWishlist,
                 product.id,
               ]);
-              Swal.fire({
-                title: "Added",
-                text: "Product has been added to your wishlist.",
-                icon: "success",
-              });
+              toast.success(
+                "Your Product has been added to wishlist successfully"
+              );
             })
             .catch((error) => {
               console.error(
@@ -194,7 +192,20 @@ export default function Home() {
 
   return (
     <div className="mt-28">
-      <img src={banner} alt="Banner" className="bannerr" />
+      <Slider {...sliderSettings} className="bannerr-slider">
+        <div>
+          <img src={banner} alt="Banner 1" className="bannerr" />
+        </div>
+        <div>
+          <img src={banner2} alt="Banner 2" className="bannerr bannerr2" />
+        </div>
+        <div>
+          <img src={banner} alt="Banner 1" className="bannerr" />
+        </div>
+        <div>
+          <img src={banner2} alt="Banner 2" className="bannerr bannerr2" />
+        </div>
+      </Slider>
       <div className="categories_contain w-full">
         <div className="subject">
           <img src={triangle} alt="Triangle" className="mb-4" />
@@ -280,7 +291,7 @@ export default function Home() {
                 className="product_heart"
                 style={{
                   backgroundColor: wishlistProducts.includes(product.id)
-                    ? "red"
+                    ? "#db4444"
                     : "rgb(220, 219, 219)",
                 }}
                 onClick={() => handleAddToWishlist(product)}
@@ -335,7 +346,7 @@ export default function Home() {
                   className="product_heart"
                   style={{
                     backgroundColor: wishlistProducts.includes(product.id)
-                      ? "red"
+                      ? "#db4444"
                       : "rgb(220, 219, 219)",
                   }}
                   onClick={() => handleAddToWishlist(product)}

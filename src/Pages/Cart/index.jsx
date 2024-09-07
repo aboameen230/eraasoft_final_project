@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
 import "./index.scss";
+import toast from "react-hot-toast";
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -52,11 +52,7 @@ export default function Cart() {
         const updatedItems = cartItems.filter((item) => item.id !== id);
         setCartItems(updatedItems);
         calculateTotal(updatedItems);
-        Swal.fire(
-          "Removed",
-          "Product has been removed from your cart.",
-          "info"
-        );
+        toast.error("Product has been removed from your cart");
       })
       .catch((error) => {
         console.error(
