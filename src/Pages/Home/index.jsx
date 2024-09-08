@@ -22,13 +22,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Modal from "../../Components/Modal";
+import Swal from "sweetalert2";
 
 export default function Home() {
-  const [selectedProduct, setSelectedProduct] = useState(null); 
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
-  }; 
+  };
 
   const handleCloseModal = () => {
     setSelectedProduct(null);
@@ -116,6 +117,11 @@ export default function Home() {
         }
       })
       .catch((error) => {
+        Swal.fire({
+          title: "error",
+          text: "Please Sign up or log in to use add to cart",
+          icon: "error",
+        });
         console.error("There was an error fetching the cart!", error);
       });
   };
@@ -196,6 +202,11 @@ export default function Home() {
         }
       })
       .catch((error) => {
+        Swal.fire({
+          title: "error",
+          text: "Please Sign up or log in to use add to wishlist",
+          icon: "error",
+        });
         console.error("There was an error fetching the wishlist!", error);
       });
   };

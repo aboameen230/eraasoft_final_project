@@ -6,6 +6,7 @@ import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import Modal from "../../Components/Modal";
+import Swal from "sweetalert2";
 
 export default function Shop() {
   const [products, setProducts] = useState([]);
@@ -89,6 +90,11 @@ export default function Shop() {
         }
       })
       .catch((error) => {
+        Swal.fire({
+          title: "error",
+          text: "Please Sign up or log in to use add to cart",
+          icon: "error",
+        });
         console.error("There was an error fetching the cart!", error);
       });
   };
@@ -170,6 +176,11 @@ export default function Shop() {
         }
       })
       .catch((error) => {
+        Swal.fire({
+          title: "error",
+          text: "Please Sign up or log in to use add to wishlist",
+          icon: "error",
+        });
         console.error("There was an error fetching the wishlist!", error);
       });
   };
