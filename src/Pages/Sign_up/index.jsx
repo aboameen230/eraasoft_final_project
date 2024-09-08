@@ -7,6 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import isPasswordValid from "../../passwordValidator";
+import toast from "react-hot-toast";
 
 export default function Sign_up() {
   const navigate = useNavigate();
@@ -40,10 +41,9 @@ export default function Sign_up() {
           }
         )
 
-       
         .then((res) => {
-         
           console.log("Response received from the server:");
+          toast.success("Signup successful");
           console.log(res.data);
           window.location.pathname = "/Log_in";
           if (res.data && res.data.user) {
@@ -53,7 +53,6 @@ export default function Sign_up() {
         });
       console.log(response.data);
     }
-   
   }
 
   return (

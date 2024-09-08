@@ -3,6 +3,7 @@
   margin: 5rem auto 5rem auto;
   padding-top: 40px;
 
+
   .cart-title {
     text-align: center;
     font-size: 2rem;
@@ -30,6 +31,9 @@
     border-radius: 8px;
     background-color: #f9f9f9;
     min-height: 200px;
+      @media screen   and (max-width: 426px) {
+        padding-bottom: 40px;
+  }
 
     .cart-image {
       width: 150px;
@@ -58,40 +62,39 @@
       }
 
       .cart-quantity {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
 
-    label {
-      margin-right: 10px;
-      font-weight: bold;
-    }
+        label {
+          margin-right: 10px;
+          font-weight: bold;
+        }
 
-    input {
-      width: 60px;
-      padding: 5px;
-      text-align: center;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      background-color: #f9f9f9;
-      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        input {
+          width: 60px;
+          padding: 5px;
+          text-align: center;
+          border-radius: 5px;
+          border: 1px solid #ccc;
+          font-size: 1rem;
+          background-color: #f9f9f9;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
-      &:focus {
-        border-color: #a88734;
-        box-shadow: 0 0 5px rgba(240, 193, 75, 0.5);
-        outline: none;
+          &:focus {
+            border-color: #a88734;
+            box-shadow: 0 0 5px rgba(240, 193, 75, 0.5);
+            outline: none;
+          }
+
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+        }
       }
-
-      &::-webkit-outer-spin-button,
-      &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-      }
-
-    }
-  }
 
       .remove-from-cart {
         position: absolute;
@@ -103,12 +106,17 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.3s ease,
+          box-shadow 0.3s ease;
 
         &:hover {
           background-color: #a83333;
           transform: scale(1.05);
           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        @media screen and (max-width: 426px) {
+          right: -10px ;
+          bottom: -35px;
         }
       }
     }

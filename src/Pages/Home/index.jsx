@@ -21,8 +21,18 @@ import toast from "react-hot-toast";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import Modal from "../../Components/Modal"
 
 export default function Home() {
+  const [selectedProduct, setSelectedProduct] = useState(null); // State for the selected product
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProduct(null);
+  };
   const [products, setProducts] = useState([]);
   const [hoveredProductId, setHoveredProductId] = useState(null);
   const [wishlistProducts, setWishlistProducts] = useState([]);
@@ -197,13 +207,7 @@ export default function Home() {
           <img src={banner} alt="Banner 1" className="bannerr" />
         </div>
         <div>
-          <img src={banner2} alt="Banner 2" className="bannerr bannerr2" />
-        </div>
-        <div>
-          <img src={banner} alt="Banner 1" className="bannerr" />
-        </div>
-        <div>
-          <img src={banner2} alt="Banner 2" className="bannerr bannerr2" />
+          <img src={banner2} alt="Banner 2" className="bannerr" />
         </div>
       </Slider>
       <div className="categories_contain w-full">
@@ -261,6 +265,7 @@ export default function Home() {
               key={product.id}
               onMouseEnter={() => handleMouseEnter(product.id)}
               onMouseLeave={handleMouseLeave}
+              onClick={() => handleProductClick(product)}
               className="product-card"
             >
               <img src={product.image} alt={product.name} />
@@ -316,6 +321,7 @@ export default function Home() {
                 key={product.id}
                 onMouseEnter={() => handleMouseEnter(product.id)}
                 onMouseLeave={handleMouseLeave}
+                onClick={() => handleProductClick(product)}
                 className="product-card"
               >
                 <img src={product.image} alt={product.name} />
@@ -360,6 +366,13 @@ export default function Home() {
           <button>View All Products</button>
         </Link>
       </div>
+      {selectedProduct && (
+        <Modal
+          product={selectedProduct}
+          isOpen={!!selectedProduct}
+          onClose={handleCloseModal}
+        />
+      )}
       <Features />
     </div>
   );
