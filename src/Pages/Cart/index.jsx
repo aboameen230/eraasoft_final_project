@@ -6,7 +6,7 @@ import "./index.scss";
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState(""); // Store selected payment method
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [visaNumber, setVisaNumber] = useState("");
   const [ccv, setCcv] = useState("");
@@ -76,7 +76,7 @@ export default function Cart() {
       paymentMethod === "visa" &&
       (!/^[0-9]{16}$/.test(visaNumber) || !/^[0-9]{3}$/.test(ccv))
     ) {
-      toast.error("Please enter valid Visa card details");
+      toast.error("Please enter a valid Visa card details");
       return;
     }
 

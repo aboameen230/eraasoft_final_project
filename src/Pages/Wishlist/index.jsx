@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./index.scss"; // Make sure to create and link this stylesheet
+import "./index.scss"; 
 import toast from "react-hot-toast";
+import Modal from "../../Components/Modalw";
+
 
 export default function Wishlist() {
   const [wishlistItems, setWishlistItems] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProduct(null);
+  };
 
   useEffect(() => {
     axios
@@ -119,6 +130,7 @@ export default function Wishlist() {
                 src={item.product.image}
                 alt={item.product.name}
                 className="wishlist-image"
+                onClick={() => handleProductClick(item.product)}
               />
               <div className="wishlist-info">
                 <h2>{item.product.name}</h2>
@@ -147,6 +159,13 @@ export default function Wishlist() {
       <Link to="/Shop" className="back-to-shop">
         <button className="shop-button">Continue Shopping</button>
       </Link>
+      {selectedProduct && (
+        <Modal
+          product={selectedProduct}
+          isOpen={!!selectedProduct}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 }

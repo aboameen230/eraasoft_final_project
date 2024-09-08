@@ -21,14 +21,14 @@ import toast from "react-hot-toast";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import Modal from "../../Components/Modal"
+import Modal from "../../Components/Modal";
 
 export default function Home() {
-  const [selectedProduct, setSelectedProduct] = useState(null); // State for the selected product
+  const [selectedProduct, setSelectedProduct] = useState(null); 
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
-  };
+  }; 
 
   const handleCloseModal = () => {
     setSelectedProduct(null);
@@ -265,10 +265,13 @@ export default function Home() {
               key={product.id}
               onMouseEnter={() => handleMouseEnter(product.id)}
               onMouseLeave={handleMouseLeave}
-              onClick={() => handleProductClick(product)}
               className="product-card"
             >
-              <img src={product.image} alt={product.name} />
+              <img
+                src={product.image}
+                alt={product.name}
+                onClick={() => handleProductClick(product)}
+              />
               <h1 className="text-xl">
                 <strong>{product.name}</strong>
               </h1>
@@ -321,10 +324,14 @@ export default function Home() {
                 key={product.id}
                 onMouseEnter={() => handleMouseEnter(product.id)}
                 onMouseLeave={handleMouseLeave}
-                onClick={() => handleProductClick(product)}
+                // onClick={() => handleProductClick(product)}
                 className="product-card"
               >
-                <img src={product.image} alt={product.name} />
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  onClick={() => handleProductClick(product)}
+                />
                 <h1 className="text-xl">
                   <strong>{product.name}</strong>
                 </h1>

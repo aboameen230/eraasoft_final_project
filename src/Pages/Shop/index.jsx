@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from "react";
-import "../Shop/index.scss"; // Create a separate style file for the shop page if needed
+import "./index.scss"; 
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import Modal from "../../Components/Modal";
 
 export default function Shop() {
   const [products, setProducts] = useState([]);
   const [hoveredProductId, setHoveredProductId] = useState(null);
   const [wishlistProducts, setWishlistProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedProduct(null);
+  };
 
   useEffect(() => {
     axios
@@ -164,7 +174,6 @@ export default function Shop() {
       });
   };
 
-  // Filter products based on search query
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -175,7 +184,6 @@ export default function Shop() {
         <strong>Shop All Products</strong>
       </h1>
 
-      {/* Search bar */}
       <div className="search-bar mb-6 text-center">
         <input
           type="text"
@@ -195,7 +203,11 @@ export default function Shop() {
               onMouseLeave={handleMouseLeave}
               className="product-card"
             >
-              <img src={product.image} alt={product.name} />
+              <img
+                src={product.image}
+                alt={product.name}
+                onClick={() => handleProductClick(product)}
+              />
               <h1 className="text-xl">
                 <strong>{product.name}</strong>
               </h1>
@@ -237,6 +249,13 @@ export default function Shop() {
       <Link className="linkbtn" to="/Shop">
         <button>View All Products</button>
       </Link>
+      {selectedProduct && (
+        <Modal
+          product={selectedProduct}
+          isOpen={!!selectedProduct}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 }

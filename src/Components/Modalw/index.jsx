@@ -3,7 +3,7 @@ import "./index.scss";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const Modal = ({ product, isOpen, onClose }) => {
+const Modalw = ({ product, isOpen, onClose }) => {
   if (!isOpen) return null;
 
   const handleAddToCart = (product) => {
@@ -60,13 +60,10 @@ const Modal = ({ product, isOpen, onClose }) => {
         console.error("There was an error fetching the cart!", error);
       });
   };
-  const handleAddToWishlist = (product) => {
+  const handleDeletefromWishlist = (product) => {
     axios
-      .post(
+      .get(
         "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
-        {
-          product_id: product.id,
-        },
         {
           headers: {
             Authorization: `Bearer ${window.localStorage.getItem(
@@ -76,16 +73,43 @@ const Modal = ({ product, isOpen, onClose }) => {
         }
       )
       .then((response) => {
-        toast.success("Your Product has been added to wishlist successfully");
+        const wishlist = response.data;
+        const wishlistItem = wishlist.find(
+          (item) => item.product.id === product.id
+        );
+
+        if (wishlistItem) {
+          axios
+            .delete(
+              `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${wishlistItem.id}/`,
+              {
+                headers: {
+                  Authorization: `Bearer ${window.localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+              }
+            )
+            .then(() => {
+              toast.error("Product has been removed from your wishlist");
+              window.location.reload();
+              
+            })
+            .catch((error) => {
+              console.error(
+                "There was an error removing the product from the wishlist!",
+                error
+              );
+            });
+            
+        } 
       })
       .catch((error) => {
-        console.error(
-          "There was an error adding the product to the wishlist!",
-          error
-        );
+        console.error("There was an error fetching the wishlist!", error);
       });
   };
-
+    
+      
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
@@ -114,9 +138,9 @@ const Modal = ({ product, isOpen, onClose }) => {
           </button>
           <button
             className="modal-button"
-            onClick={() => handleAddToWishlist(product)}
+            onClick={() => handleDeletefromWishlist(product)}
           >
-            Add to Wichlist
+            Delete from Wichlist
           </button>
         </div>
       </div>
@@ -124,4 +148,4 @@ const Modal = ({ product, isOpen, onClose }) => {
   );
 };
 
-export default Modal;
+export default Modalw;
