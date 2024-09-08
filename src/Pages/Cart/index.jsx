@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./index.scss";
 import toast from "react-hot-toast";
+import "./index.scss";
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState(""); // Store selected payment method
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [visaNumber, setVisaNumber] = useState("");
+  const [ccv, setCcv] = useState("");
 
   useEffect(() => {
     axios
@@ -62,6 +66,23 @@ export default function Cart() {
       });
   };
 
+  const handlePayment = () => {
+    if (paymentMethod === "vodafone" && !/^01[0-9]{9}$/.test(phoneNumber)) {
+      toast.error("Please enter a valid Vodafone phone number");
+      return;
+    }
+
+    if (
+      paymentMethod === "visa" &&
+      (!/^[0-9]{16}$/.test(visaNumber) || !/^[0-9]{3}$/.test(ccv))
+    ) {
+      toast.error("Please enter valid Visa card details");
+      return;
+    }
+
+    toast.success("Payment processed successfully (Fake)");
+  };
+
   return (
     <div className="cart-page">
       <h1 className="cart-title">My Cart</h1>
@@ -116,8 +137,51 @@ export default function Cart() {
           </div>
           <div className="payment-method">
             <h3>Payment Method</h3>
-            <div className="fake-payment-card"></div>
-            <button className="pay-now-button">Proceed to Checkout</button>
+            <select
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+            >
+              <option value="">Select Payment Method</option>
+              <option value="vodafone">Vodafone Cash</option>
+              <option value="visa">Visa</option>
+            </select>
+
+            {paymentMethod === "vodafone" && (
+              <div className="vodafone-input">
+                <label>Phone Number</label>
+                <input
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  placeholder="Enter phone number"
+                />
+              </div>
+            )}
+
+            {paymentMethod === "visa" && (
+              <div className="visa-inputs">
+                <label>Visa Number</label>
+                <input
+                  type="text"
+                  value={visaNumber}
+                  maxLength="16"
+                  onChange={(e) => setVisaNumber(e.target.value)}
+                  placeholder="Enter 16-digit Visa number"
+                />
+                <label>CCV</label>
+                <input
+                  type="text"
+                  value={ccv}
+                  maxLength="3"
+                  onChange={(e) => setCcv(e.target.value)}
+                  placeholder="Enter 3-digit CCV"
+                />
+              </div>
+            )}
+
+            <button className="pay-now-button" onClick={handlePayment}>
+              Proceed to Checkout
+            </button>
           </div>
         </div>
       </div>

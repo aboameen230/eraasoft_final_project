@@ -192,3 +192,50 @@
     }
   }
 }
+.payment-method {
+  margin-top: 20px;
+
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .vodafone-input,
+  .visa-inputs {
+    margin-top: 15px;
+
+    label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+  }
+
+  .pay-now-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #f0c14b;
+    color: #111;
+    border: 1px solid #a88734;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      background-color: #ddb347;
+      transform: scale(1.05);
+    }
+  }
+}
