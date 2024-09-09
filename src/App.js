@@ -13,6 +13,8 @@ import Shop from "./Pages/Shop";
 import Wishlist from "./Pages/Wishlist";
 import Cart from "./Pages/Cart";
 import { Toaster } from "react-hot-toast";
+import Reseturpass from "./Pages/Reseturpass";
+import Updateurpass from './Pages/Updateurpass/index';
 
 export default function App() {
   return (
@@ -25,6 +27,8 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path="/Home" element={<Home />} />
             <Route path="/Log_in" element={<LogIn />} />
+            <Route path="/Reseturpass" element={<Reseturpass />} />
+            <Route path="/Updateurpass" element={<Updateurpass />} />
             <Route path="/Contact" element={<Contact />} />
             <Route path="/Sign_up" element={<Sign_up />} />
             <Route path="/About" element={<About />} />
@@ -41,6 +45,3 @@ export default function App() {
     </div>
   );
 }
-
-//ameen230@gamil.com 01018321361
-//230122001AsD@@

@@ -77,7 +77,7 @@ export default function Cart() {
       return;
     }
 
-    toast.success("Payment processed successfully (Fake)");
+    toast.success("Payment processed successfully");
   };
 
   return (

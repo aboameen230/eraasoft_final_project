@@ -92,7 +92,7 @@ const LogIn = () => {
             <br />
             <div className="ll">
               <button type="submit">Log in</button>
-              <Link to="#">Forgot Password?</Link>
+              <Link to="/Reseturpass">Forgot Password?</Link>
             </div>
           </form>
           <p className="al">
