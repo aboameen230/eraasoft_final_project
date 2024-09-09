@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./index.scss"; 
+import "./index.scss";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
@@ -7,12 +7,13 @@ import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import Modal from "../../Components/Modal";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 export default function Shop() {
   const [products, setProducts] = useState([]);
   const [hoveredProductId, setHoveredProductId] = useState(null);
   const [wishlistProducts, setWishlistProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   const handleProductClick = (product) => {
@@ -48,9 +49,7 @@ export default function Shop() {
         "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -72,9 +71,7 @@ export default function Shop() {
               },
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )
@@ -105,9 +102,7 @@ export default function Shop() {
         "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -125,9 +120,7 @@ export default function Shop() {
               `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${wishlistItem.id}/`,
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )
@@ -152,9 +145,7 @@ export default function Shop() {
               },
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )

@@ -5,6 +5,8 @@ import sideImage from "../../Assets/Side Image.png";
 import axios from "axios";
 import isPasswordValid from "../../passwordValidator";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
+
 
 const LogIn = () => {
   const navigate = useNavigate();
@@ -46,8 +48,8 @@ const LogIn = () => {
       console.log("Response received from the server:");
       console.log(responseData);
 
-      window.localStorage.setItem("accessToken", responseData.access);
-      window.localStorage.setItem("ID", responseData.user.id);
+      Cookies.set("accessToken", responseData.access);
+      Cookies.set("ID", responseData.user.id);
       window.location.pathname = "/";
 
       if (responseData && responseData.user) {

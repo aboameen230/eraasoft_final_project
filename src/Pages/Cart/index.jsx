@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import "./index.scss";
+import  Cookies  from 'js-cookie';
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -17,9 +18,7 @@ export default function Cart() {
         "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -46,9 +45,7 @@ export default function Cart() {
         `https://django-e-commerce-production.up.railway.app/carts/my-cart/${id}/`,
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )

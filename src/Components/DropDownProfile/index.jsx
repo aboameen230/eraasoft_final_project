@@ -4,11 +4,12 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function DropDownProfile() {
   function Logout() {
-    window.localStorage.removeItem("accessToken");
-    window.localStorage.removeItem("ID");
+    Cookies.remove("accessToken");
+    Cookies.remove("ID");
     window.location.pathname = "/";
   }
   return (

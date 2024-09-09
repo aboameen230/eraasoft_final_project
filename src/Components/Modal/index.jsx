@@ -2,6 +2,7 @@ import React from "react";
 import "./index.scss";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 const Modal = ({ product, isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -12,9 +13,7 @@ const Modal = ({ product, isOpen, onClose }) => {
         "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -38,9 +37,7 @@ const Modal = ({ product, isOpen, onClose }) => {
               },
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )
@@ -69,7 +66,7 @@ const Modal = ({ product, isOpen, onClose }) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
+            Authorization: `Bearer ${window.Cookies.get(
               "accessToken"
             )}`,
           },

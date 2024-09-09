@@ -23,6 +23,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Modal from "../../Components/Modal";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -72,9 +73,7 @@ export default function Home() {
         "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -98,9 +97,7 @@ export default function Home() {
               },
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )
@@ -131,9 +128,7 @@ export default function Home() {
         "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -151,9 +146,7 @@ export default function Home() {
               `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${wishlistItem.id}/`,
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )
@@ -178,9 +171,7 @@ export default function Home() {
               },
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )

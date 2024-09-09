@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./index.scss"; 
+import "./index.scss";
 import toast from "react-hot-toast";
 import Modal from "../../Components/Modalw";
-
+import Cookies from "js-cookie";
 
 export default function Wishlist() {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -24,9 +24,7 @@ export default function Wishlist() {
         "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -44,9 +42,7 @@ export default function Wishlist() {
         "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -70,9 +66,7 @@ export default function Wishlist() {
               },
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )
@@ -99,9 +93,7 @@ export default function Wishlist() {
         `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${id}/`,
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -109,7 +101,7 @@ export default function Wishlist() {
         setWishlistItems((prevItems) =>
           prevItems.filter((item) => item.id !== id)
         );
-        toast.error("Product has been removed from your wishlist.")
+        toast.error("Product has been removed from your wishlist.");
       })
       .catch((error) => {
         console.error(

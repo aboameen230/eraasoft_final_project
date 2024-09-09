@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { faBars, faCartShopping, faX } from "@fortawesome/free-solid-svg-icons";
 import { faHeart, faUser } from "@fortawesome/free-regular-svg-icons";
 import DropDownProfile from "../DropDownProfile";
+import Cookies  from 'js-cookie';
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -57,7 +58,7 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            {window.localStorage.getItem("accessToken") ? (
+            {Cookies.get("accessToken") ? (
               <div className="ml-20 flex gap-4 items-center">
                 <Link to="/Wishlist">
                   <FontAwesomeIcon className="cursor-pointer" icon={faHeart} />

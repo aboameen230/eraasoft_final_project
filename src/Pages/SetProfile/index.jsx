@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import "./index.scss";
+import Cookies from "js-cookie";
 
 export default function ProfilePage() {
   const [name, setName] = useState("");
@@ -23,9 +24,7 @@ export default function ProfilePage() {
           "https://django-e-commerce-production.up.railway.app/customers/profiles/",
           {
             headers: {
-              Authorization: `Bearer ${window.localStorage.getItem(
-                "accessToken"
-              )}`,
+              Authorization: `Bearer ${Cookies.get("accessToken")}`,
             },
           }
         );
@@ -55,16 +54,14 @@ export default function ProfilePage() {
       formData.append("phone_number", phone);
       formData.append("password", password);
       formData.append("image", image);
-      const id = window.localStorage.getItem("ID");
+      const id = Cookies.get("ID");
 
       const res = await axios.patch(
         `https://django-e-commerce-production.up.railway.app/customers/profiles/${id}/`,
         formData,
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       );
@@ -74,7 +71,7 @@ export default function ProfilePage() {
           text: "Your Profile has been changed successfully",
           icon: "success",
         }).then(() => {
-          window.location.reload(); 
+          window.location.reload();
         });
       }
     } catch (error) {
@@ -82,12 +79,7 @@ export default function ProfilePage() {
     }
   }
 
-  if (loading)
-    return (
-      <div className="loader">
-        Loading...
-      </div>
-    );
+  if (loading) return <div className="loader">Loading...</div>;
   if (error)
     return (
       <div className="text-black font-bold text-3xl flex justify-center items-center">

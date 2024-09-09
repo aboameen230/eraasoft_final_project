@@ -2,6 +2,7 @@ import React from "react";
 import "./index.scss";
 import axios from "axios";
 import toast from "react-hot-toast";
+import  Cookies  from 'js-cookie';
 
 const Modalw = ({ product, isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -12,9 +13,7 @@ const Modalw = ({ product, isOpen, onClose }) => {
         "https://django-e-commerce-production.up.railway.app/carts/my-cart/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -38,9 +37,7 @@ const Modalw = ({ product, isOpen, onClose }) => {
               },
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )
@@ -66,9 +63,7 @@ const Modalw = ({ product, isOpen, onClose }) => {
         "https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/",
         {
           headers: {
-            Authorization: `Bearer ${window.localStorage.getItem(
-              "accessToken"
-            )}`,
+            Authorization: `Bearer ${Cookies.get("accessToken")}`,
           },
         }
       )
@@ -84,16 +79,13 @@ const Modalw = ({ product, isOpen, onClose }) => {
               `https://django-e-commerce-production.up.railway.app/wishlists/my-wishlist/${wishlistItem.id}/`,
               {
                 headers: {
-                  Authorization: `Bearer ${window.localStorage.getItem(
-                    "accessToken"
-                  )}`,
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
                 },
               }
             )
             .then(() => {
               toast.error("Product has been removed from your wishlist");
               window.location.reload();
-              
             })
             .catch((error) => {
               console.error(
@@ -101,8 +93,7 @@ const Modalw = ({ product, isOpen, onClose }) => {
                 error
               );
             });
-            
-        } 
+        }
       })
       .catch((error) => {
         console.error("There was an error fetching the wishlist!", error);
