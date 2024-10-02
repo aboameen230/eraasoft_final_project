@@ -248,8 +248,8 @@ export default function Shop() {
           ))}
       </div>
 
-      <Link className="linkbtn" to="/Shop">
-        <button>View All Products</button>
+      <Link className="linkbtn" to="/Home">
+        <button>Back To Home</button>
       </Link>
       {selectedProduct && (
         <Modal
